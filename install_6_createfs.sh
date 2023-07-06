@@ -1,5 +1,5 @@
 #!/bin/bash
-POOLNUM=3
+POOLNUM=512
 ceph osd pool create fs_db_data ${POOLNUM}
 ceph osd pool create fs_db_metadata ${POOLNUM}
 ceph osd lspools

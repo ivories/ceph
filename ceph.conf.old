@@ -1,0 +1,22 @@
+[global]
+fsid = 3c6ea1f1-7823-45cf-b4ac-556955ca91ab
+mon_initial_members = c05,c04,c06
+mon_host = 192.168.5.15,192.168.5.14,192.168.5.16
+public network = 192.168.5.0/24
+
+[mon]
+ms_bind_msgr2 = true
+ms_bind_msgr1 = true
+auth_allow_insecure_global_id_reclaim = false
+mon_allow_pool_delete = true
+
+
+[mds.c04]
+host = c04
+
+[mds.c05]
+host = c05
+
+[mds.c06]
+host = c06
+

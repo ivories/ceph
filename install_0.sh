@@ -19,9 +19,8 @@ chown ceph:ceph ceph.mon.keyring
 for i in $(cat hosts.txt);do
     ssh ${i} "systemctl disable --now firewalld"
     ssh ${i} "sed -i 's/SELINUX=.*$/SELINUX=disabled/g' /etc/selinux/config"
-    #ssh ${i} "apt install -y ceph"
     ssh ${i} "wget -q -O- 'https://download.ceph.com/keys/release.asc' | sudo apt-key add -"
     ssh ${i} "apt-add-repository 'deb https://download.ceph.com/debian-quincy/ focal main'"
-    ssh ${i} "apt remove -y ceph && apt install -y ceph"
+    ssh ${i} "apt install -y ceph chrony"
 done
 
