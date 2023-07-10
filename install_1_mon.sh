@@ -18,6 +18,8 @@ done
 # 去掉最后的逗号
 mon_initial_members=${mon_initial_members%?}
 mon_host=${mon_host%?}
+first_host_ip=$(grep "${hosts[0]}" /etc/hosts | awk '{print $1}')
+network_prefix=${first_host_ip%.*}
 
 # 构建新的mds字符串
 mds_str=""
@@ -30,6 +32,7 @@ cp example.ceph.conf ceph.conf
 sed -i "s/^mon_initial_members = .*/mon_initial_members = $mon_initial_members/" ./ceph.conf
 sed -i "s/^mon_host = .*/mon_host = $mon_host/" ./ceph.conf
 sed -i "s/@@@mds@@@/$mds_str/" ./ceph.conf
+sed -i "s/^public network = .*/public network = $network_prefix.0\/24/" ./ceph.conf
 
 
 rm -rf monmap
