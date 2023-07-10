@@ -1,5 +1,5 @@
 [client.admin]
-	key = AQAtG6ZkrYsqCBAAR6IY+fuqImCuYFpBCy478A==
+	key = AQBbratkZSL0IxAALtFJz/qKqA2+ae702golxg==
 	caps mds = "allow *"
 	caps mgr = "allow *"
 	caps mon = "allow *"

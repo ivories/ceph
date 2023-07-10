@@ -15,3 +15,5 @@ ceph-authtool ceph.mon.keyring --import-keyring ceph.keyring
 #Change the owner for ceph.mon.keyring
 chown ceph:ceph ceph.mon.keyring
 
+cp example.hosts.txt hosts.txt
+cp example.ceph.conf ceph.conf
