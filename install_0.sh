@@ -38,5 +38,6 @@ deb https://download.ceph.com/debian-quincy/ focal main
 EOF
 
 apt update && apt install -y python3.9 && apt remove -y python3.10 python3-minimal libpython3-stdlib libnl-3-200
-apt install -y ceph chrony
+apt autoremove
+apt install -y ceph chrony netplan.io
 

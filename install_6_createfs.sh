@@ -4,7 +4,7 @@ ceph osd pool create fs_db_data ${POOLNUM}
 ceph osd pool create fs_db_metadata ${POOLNUM}
 ceph osd lspools
 ceph fs new cephfs fs_db_metadata fs_db_data
-ceph fs set cephfs max_mds 3
+ceph fs set cephfs max_mds 5
 
 ceph auth add client.cephfs mon 'allow r' mds 'allow rw' osd 'allow rwx pool=cephfs'
 ceph auth get client.cephfs -o /etc/ceph/ceph.client.cephfs.keyring
