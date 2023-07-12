@@ -5,7 +5,7 @@ else
   OSDID=0
 fi
 
-for i in $(cat hosts.txt); do
+for i in $(cat hosts_osd.txt); do
     ssh ${i} "sudo -u ceph mkdir -p /var/lib/ceph/bootstrap-osd"
     scp ceph.keyring ${i}:/var/lib/ceph/bootstrap-osd/
     ssh ${i} "chown ceph:ceph -R /var/lib/ceph/bootstrap-osd/"
