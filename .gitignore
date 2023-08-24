@@ -1,0 +1,9 @@
+monmap
+ceph.client.admin.keyring
+ceph.conf
+ceph.conf.old
+ceph.keyring
+replicated_ruleset.crush
+osdid.txt
+hosts.txt
+hosts_osd.txt

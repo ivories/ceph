@@ -1,4 +1,5 @@
 #!/bin/bash
+
 #Create a keyring for your cluster and generate a monitor secret key
 ceph-authtool --create-keyring ceph.mon.keyring --gen-key -n mon. --cap mon 'allow *'
 
@@ -15,12 +16,28 @@ ceph-authtool ceph.mon.keyring --import-keyring ceph.keyring
 #Change the owner for ceph.mon.keyring
 chown ceph:ceph ceph.mon.keyring
 
+cp example.hosts.txt hosts.txt
+cp example.ceph.conf ceph.conf
 
-for i in $(cat hosts.txt);do
-    ssh ${i} "systemctl disable --now firewalld"
-    ssh ${i} "sed -i 's/SELINUX=.*$/SELINUX=disabled/g' /etc/selinux/config"
-    ssh ${i} "wget -q -O- 'https://download.ceph.com/keys/release.asc' | sudo apt-key add -"
-    ssh ${i} "apt-add-repository 'deb https://download.ceph.com/debian-quincy/ focal main'"
-    ssh ${i} "apt install -y ceph chrony"
-done
+
+systemctl disable --now firewalld
+sed -i 's/SELINUX=.*$/SELINUX=disabled/g' /etc/selinux/config
+wget -q -O- 'https://download.ceph.com/keys/release.asc' | sudo apt-key add -
+cat > /etc/apt/sources.list << EOF
+deb http://cn.archive.ubuntu.com/ubuntu focal main restricted
+deb http://cn.archive.ubuntu.com/ubuntu focal-updates main restricted
+deb http://cn.archive.ubuntu.com/ubuntu focal universe
+deb http://cn.archive.ubuntu.com/ubuntu focal-updates universe
+deb http://cn.archive.ubuntu.com/ubuntu focal multiverse
+deb http://cn.archive.ubuntu.com/ubuntu focal-updates multiverse
+deb http://cn.archive.ubuntu.com/ubuntu focal-backports main restricted universe multiverse
+deb http://cn.archive.ubuntu.com/ubuntu focal-security main restricted
+deb http://cn.archive.ubuntu.com/ubuntu focal-security universe
+deb http://cn.archive.ubuntu.com/ubuntu focal-security multiverse
+deb https://download.ceph.com/debian-quincy/ focal main
+EOF
+
+apt update && apt install -y python3.9 && apt remove -y python3.10 python3-minimal libpython3-stdlib libnl-3-200
+apt autoremove
+apt install -y ceph chrony netplan.io
 
